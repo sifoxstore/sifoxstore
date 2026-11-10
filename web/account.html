@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiFox Store — অ্যাকাউন্ট লগইন ও রেজিস্ট্রেশন</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Hind Siliguri', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-sky-600 text-white p-6 text-center relative">
+            <a href="index.html" class="absolute left-4 top-5 text-sky-200 hover:text-white text-sm font-semibold flex items-center gap-1">
+                ← স্টোরে ফিরুন
+            </a>
+            <div class="text-3xl mb-1">🦊</div>
+            <h1 class="text-xl font-bold tracking-tight">SiFox Store অ্যাকাউন্ট</h1>
+            <p class="text-xs text-sky-100 mt-1">অর্ডার হিস্টোরি ও দ্রুত চেকআউটের জন্য লগইন করুন</p>
+        </div>
+
+        <div class="p-6">
+            <!-- Tabs -->
+            <div class="flex rounded-xl bg-slate-100 p-1 mb-6 text-sm font-bold">
+                <button id="loginTab" class="flex-1 py-2 rounded-lg bg-white shadow-sm text-sky-600 transition">লগইন</button>
+                <button id="signupTab" class="flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition">নতুন অ্যাকাউন্ট</button>
+            </div>
+
+            <form id="authForm" class="space-y-4">
+                <div id="nameField" class="hidden">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">পূর্ণ নাম *</label>
+                    <input id="name" type="text" placeholder="যেমন: তানভীর আহমেদ" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <div id="phoneField" class="hidden">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">মোবাইল নম্বর *</label>
+                    <input id="phone" type="tel" placeholder="০১XXXXXXXXX" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ইমেইল অ্যাড্রেস *</label>
+                    <input id="email" type="email" required placeholder="your@email.com" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">পাসওয়ার্ড *</label>
+                    <input id="password" type="password" required placeholder="কমপক্ষে ৬ ডিজিট" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <button id="submit" type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-xl shadow-md transition text-sm">
+                    লগইন করুন
+                </button>
+            </form>
+
+            <div class="mt-4 flex items-center justify-between text-xs text-slate-500 pt-2 border-t">
+                <button id="reset" class="hover:text-sky-600 underline">পাসওয়ার্ড ভুলে গেছেন?</button>
+                <button id="logout" class="hidden text-red-600 hover:underline font-bold">লগআউট</button>
+            </div>
+
+            <div id="msg" class="mt-4 text-center text-xs font-semibold text-slate-600 min-h-[20px]"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const cfg = window.SIFOX_CONFIG || {};
+        const isConfigured = window.supabase && cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes("YOUR_PROJECT");
+        const db = isConfigured ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
+        let mode = "login";
+        const $ = x => document.getElementById(x);
+
+        function setMode(m) {
+            mode = m;
+            $("nameField").classList.toggle("hidden", m !== "signup");
+            $("phoneField").classList.toggle("hidden", m !== "signup");
+            $("loginTab").className = m === "login" ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-sky-600 font-bold transition" : "flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition";
+            $("signupTab").className = m === "signup" ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-sky-600 font-bold transition" : "flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition";
+            $("submit").textContent = m === "signup" ? "অ্যাকাউন্ট তৈরি করুন" : "লগইন করুন";
+        }
+
+        $("loginTab").onclick = () => setMode("login");
+        $("signupTab").onclick = () => setMode("signup");
+
+        $("authForm").onsubmit = async e => {
+            e.preventDefault();
+            if (!db) {
+                $("msg").textContent = "Supabase কনফিগার করা হয়নি। web/config.js ফাইল চেক করুন।";
+                $("msg").className = "mt-4 text-center text-xs font-semibold text-amber-600";
+                return;
+            }
+
+            $("msg").textContent = "অপেক্ষা করুন...";
+            $("msg").className = "mt-4 text-center text-xs font-semibold text-slate-600";
+
+            try {
+                if (mode === "signup") {
+                    const { data, error } = await db.auth.signUp({
+                        email: $("email").value.trim(),
+                        password: $("password").value,
+                        options: {
+                            data: {
+                                full_name: $("name").value.trim(),
+                                phone: $("phone").value.trim()
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+                    $("msg").textContent = "অ্যাকাউন্ট তৈরি সফল! ইমেইল ভেরিফিকেশন লিংক পাঠানো হতে পারে।";
+                    $("msg").className = "mt-4 text-center text-xs font-semibold text-emerald-600";
+                } else {
+                    const { data, error } = await db.auth.signInWithPassword({
+                        email: $("email").value.trim(),
+                        password: $("password").value
+                    });
+
+                    if (error) throw error;
+                    $("msg").textContent = "লগইন সফল! রিডাইরেক্ট হচ্ছে...";
+                    $("msg").className = "mt-4 text-center text-xs font-semibold text-emerald-600";
+                    setTimeout(() => { location.href = "index.html"; }, 800);
+                }
+            } catch (err) {
+                $("msg").textContent = err.message || "ত্রুটি ঘটেছে, আবার চেষ্টা করুন।";
+                $("msg").className = "mt-4 text-center text-xs font-semibold text-red-600";
+            }
+        };
+
+        $("reset").onclick = async () => {
+            if (!db) return alert("Supabase কনফিগার করুন।");
+            const email = $("email").value.trim();
+            if (!email) return alert("প্রথমে ইমেইল বক্সে আপনার ইমেইল লিখুন।");
+            const { error } = await db.auth.resetPasswordForEmail(email, {
+                redirectTo: location.origin + "/account.html"
+            });
+            $("msg").textContent = error ? error.message : "পাসওয়ার্ড রিসেট লিংক আপনার ইমেইলে পাঠানো হয়েছে।";
+        };
+
+        $("logout").onclick = async () => {
+            if (db) await db.auth.signOut();
+            location.href = "index.html";
+        };
+
+        (async () => {
+            if (!db) return;
+            const { data: { user } } = await db.auth.getUser();
+            if (user) {
+                $("msg").textContent = "লগইন আছেন: " + user.email;
+                $("msg").className = "mt-4 text-center text-xs font-semibold text-emerald-700";
+                $("logout").classList.remove("hidden");
+            }
+        })();
+    </script>
+</body>
+</html>

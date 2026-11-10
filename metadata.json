@@ -1,0 +1,6 @@
+{
+  "name": "SiFox Store",
+  "description": "Full-stack e-commerce & all-in-one platform with catalog, cart, BD checkout across 64 districts (Inside Dhaka ৳80 / Outside ৳140 auto-calculated), Universal 'My Websites' hub, bKash/Nagad/COD, and owner Super Admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

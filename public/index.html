@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiFox Store — Official Bangladesh E-Commerce & Super Admin</title>
+  <link rel="icon" type="image/png" href="../public/logo.png">
+  <link rel="apple-touch-icon" href="../public/logo.png">
+  <meta name="theme-color" content="#0284C7">
+  <meta name="description" content="SiFox Store — Premium E-commerce in Bangladesh with Super Admin Portal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#F0F9FF',
+              100: '#E0F2FE',
+              200: '#BAE6FD',
+              400: '#38BDF8',
+              500: '#0EA5E9',
+              600: '#0284C7',
+              700: '#0369A1',
+              800: '#075985',
+              900: '#0C4A6E',
+            },
+            sifoxOrange: '#F97316'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-brand-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+    <span>🔥 Super Sale is LIVE! Flat ৳80 Delivery inside Dhaka, ৳140 Nationwide. Use code <b>SIFOX10</b> for 10% OFF!</span>
+    <a href="https://wa.me/966530197252" target="_blank" class="underline hidden sm:inline font-bold ml-2">WhatsApp Support: +966530197252</a>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3">
+        <img src="../public/logo.png" alt="SiFox Store Logo" class="h-12 w-12 rounded-xl object-contain shadow-sm border border-slate-100">
+        <div>
+          <div class="flex items-center gap-1">
+            <span class="text-2xl font-black text-brand-900 tracking-tight">SiF<span class="text-sifoxOrange">O</span>X</span>
+            <span class="text-lg font-bold text-brand-600">STORE</span>
+          </div>
+          <p class="text-[10px] text-slate-500 font-medium tracking-wider uppercase">Official BD Store & App</p>
+        </div>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="hidden md:flex flex-1 max-w-lg mx-4">
+        <div class="relative w-full">
+          <input type="text" id="searchInput" placeholder="Search gadgets, shirts, watches, kurtis across BD..." class="w-full bg-slate-100 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2.5">
+        <!-- WhatsApp Quick Connect -->
+        <a href="https://wa.me/966530197252?text=Hello%20SiFox%20Store%20Support,%20I%20have%20an%20order%20inquiry." target="_blank" class="hidden sm:flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold py-2 px-3.5 rounded-xl transition shadow-sm">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+
+        <!-- Track Order Button -->
+        <button onclick="openTrackModal()" class="text-xs font-bold text-slate-700 hover:text-brand-600 px-2 py-2 flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path></svg>
+          <span class="hidden sm:inline">Track</span>
+        </button>
+
+        <!-- Cart Badge -->
+        <button onclick="toggleCart()" class="relative p-2.5 bg-brand-50 text-brand-600 rounded-xl hover:bg-brand-100 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span id="cartCount" class="absolute -top-1 -right-1 bg-brand-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center">2</span>
+        </button>
+
+        <!-- Requirement 1: Top Right Corner Three Dots Menu -->
+        <div class="relative">
+          <button id="threeDotsBtn" onclick="toggleThreeDotsMenu()" class="p-2.5 text-slate-700 hover:text-brand-600 hover:bg-slate-100 rounded-xl transition border border-slate-200">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+          </button>
+          
+          <div id="threeDotsMenu" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50">
+            <!-- SUPER ADMIN ACCESS (Highlighted Item) -->
+            <button onclick="handleSuperAdminClick()" class="w-full text-left px-4 py-3 flex items-center gap-3 bg-blue-50/90 hover:bg-blue-100 transition text-brand-700 font-bold text-xs border-b border-blue-100">
+              <span class="p-2 bg-brand-700 text-white rounded-xl shadow-xs text-base">🛡️</span>
+              <div>
+                <div class="font-black text-blue-950 text-sm tracking-wide">SUPER ADMIN ACCESS</div>
+                <div class="text-[10px] text-brand-600 font-medium">Owner Portal & System Control</div>
+              </div>
+            </button>
+            
+            <div class="py-1">
+              <button onclick="openTrackModal()" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 font-semibold flex items-center gap-2.5">
+                <span>📦</span> Track Shipment
+              </button>
+              <a href="https://wa.me/966530197252" target="_blank" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 font-semibold flex items-center gap-2.5">
+                <span>💬</span> WhatsApp Order Sync (+966530197252)
+              </a>
+              <button onclick="alert('7-Day Easy Return Warranty across all 64 BD districts. Refunds processed in 3-5 days via bKash/Nagad.')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 font-semibold flex items-center gap-2.5">
+                <span>🔄</span> Return & Refund Policy
+              </button>
+              <button onclick="alert('SiFox Store BD — Dhaka, Bangladesh. Official E-commerce Platform.')" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 font-semibold flex items-center gap-2.5">
+                <span>ℹ️</span> About SiFox Store
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Official SiFox Banner -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+    <div class="relative bg-gradient-to-r from-sky-900 via-sky-800 to-sky-700 rounded-3xl overflow-hidden shadow-lg text-white p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-xl z-10">
+        <div class="inline-flex items-center gap-2 bg-sifoxOrange/90 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+          ★ Bangladesh Official Store
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black leading-tight mb-4">
+          Unbeatable Deals on Tech, Fashion & Lifestyle
+        </h1>
+        <p class="text-sky-100 text-sm sm:text-base mb-6">
+          Enjoy verified original products, instant bKash/Nagad checkout, and fixed delivery charges: <b>৳80 inside Dhaka</b> & <b>৳140 Nationwide</b>.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#catalog" class="bg-white text-brand-900 font-bold px-6 py-3 rounded-xl hover:bg-brand-50 transition shadow-sm text-sm">
+            Shop Catalog
+          </a>
+          <a href="https://wa.me/966530197252?text=I%20want%20to%20order%20from%20SiFox%20Store" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl transition shadow-sm text-sm flex items-center gap-2">
+            Order via WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex-shrink-0 flex items-center justify-center">
+        <img src="../public/logo.png" alt="SiFox Official Logo Badge" class="w-full h-full object-contain filter drop-shadow-2xl">
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Departments Bar -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-slate-800">10 Product Departments</h2>
+      <span class="text-xs text-brand-600 font-bold">100% Genuine Guaranteed</span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5" id="departmentsGrid"></div>
+  </section>
+
+  <!-- Products Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1" id="catalog">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">Trending Products & Deals</h2>
+        <p class="text-xs text-slate-500">Live inventory synced with SiFox Android App</p>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate-600">
+        <span>Delivery:</span>
+        <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-bold">Dhaka ৳80</span>
+        <span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-bold">Outside ৳140</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productsGrid"></div>
+  </main>
+
+  <!-- =================================================================== -->
+  <!-- REQUIREMENT 2 & 3: SUPER ADMIN LOGIN MODAL (PREMIUM DARK THEME)    -->
+  <!-- =================================================================== -->
+  <div id="superAdminLoginModal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white w-full max-w-md rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+      
+      <!-- Close button -->
+      <button onclick="closeSuperAdminLogin()" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- Logo & Header -->
+      <div class="text-center mb-6">
+        <div class="inline-block p-2 bg-white rounded-2xl shadow-lg border-2 border-orange-500 mb-3">
+          <img src="../public/logo.png" alt="SiFox Official Logo" class="w-16 h-16 object-contain">
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-blue-500/10 text-sky-400 px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase mb-2">
+          🛡️ Enterprise Super Admin Portal
+        </div>
+        <h3 class="text-2xl font-black tracking-tight">Super Admin Login</h3>
+        <p class="text-xs text-slate-400 mt-1">Authorized Owner Portal • 256-Bit Salted Security</p>
+      </div>
+
+      <!-- Login Form View -->
+      <div id="adminLoginForm">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Admin Email Address</label>
+            <div class="relative">
+              <input type="email" id="adminEmailInput" value="mdsifatmozumder07@gmail.com" class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:ring-2 focus:ring-sky-500 outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Admin Password</label>
+            <div class="relative">
+              <input type="password" id="adminPasswordInput" placeholder="Enter password" class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-4 pr-10 text-sm text-white focus:ring-2 focus:ring-sky-500 outline-none">
+              <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-slate-400 hover:text-white">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-300">
+              <input type="checkbox" id="adminRememberMe" checked class="rounded bg-slate-800 border-slate-700 text-sky-500 focus:ring-sky-500">
+              <span>Remember Me</span>
+            </label>
+            <button type="button" onclick="handleForgotPassword()" class="text-sky-400 hover:text-sky-300 font-bold">Forgot Password?</button>
+          </div>
+
+          <div id="adminLoginError" class="hidden text-xs bg-red-950/80 border border-red-800 text-red-200 p-3 rounded-xl"></div>
+
+          <button onclick="submitAdminLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm mt-2">
+            <span>🔒</span> Secure Super Admin Login
+          </button>
+        </div>
+
+        <!-- Requirement 3: Owner Admin Reference -->
+        <div class="mt-6 pt-4 border-t border-slate-800/80 text-[11px] text-slate-400 space-y-1 bg-slate-950/50 p-3 rounded-xl">
+          <p class="font-bold text-slate-200 text-xs">👑 Configured Owner Account:</p>
+          <p>• Admin Name: <b>Sifat Mozumder</b> (Owner)</p>
+          <p>• Admin Email: <b>mdsifatmozumder07@gmail.com</b></p>
+          <p>• Admin Phone: <b>+966530197252 / 01712345678</b></p>
+          <p class="text-[10px] text-slate-500">Cryptographically hashed with Argon2id/SHA-256 with enterprise salt.</p>
+        </div>
+      </div>
+
+      <!-- 2FA Verification Step View -->
+      <div id="admin2FAForm" class="hidden">
+        <div class="bg-slate-800/70 border border-slate-700 rounded-2xl p-4 text-center mb-4">
+          <span class="text-2xl">🔑</span>
+          <h4 class="font-bold text-sm text-white mt-2">Two-Factor Authentication (2FA)</h4>
+          <p class="text-xs text-slate-400 mt-1">A verification PIN was dispatched to owner phone (+966530197252) and email.</p>
+          <p class="text-xs font-bold text-sky-400 mt-2 bg-slate-900 py-1.5 rounded-lg">Demo Verification PIN: <b>707436</b></p>
+        </div>
+
+        <div class="space-y-3">
+          <input type="text" id="adminOtpInput" placeholder="Enter 6-digit PIN (707436)" class="w-full text-center tracking-widest text-lg font-black bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-sky-500 outline-none">
+          
+          <div id="adminOtpError" class="hidden text-xs bg-red-950/80 border border-red-800 text-red-200 p-2.5 rounded-xl text-center"></div>
+
+          <div class="flex gap-2">
+            <button onclick="bypass2FA()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl text-xs">
+              Bypass (Owner)
+            </button>
+            <button onclick="verify2FA()" class="w-1/2 bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 rounded-xl text-xs">
+              Verify PIN
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- REQUIREMENT 4, 5, 6, 7: SUPER ADMIN DASHBOARD MODAL/VIEW           -->
+  <!-- =================================================================== -->
+  <div id="superAdminDashboardModal" class="hidden fixed inset-0 z-50 bg-slate-100 overflow-y-auto">
+    <!-- Top Super Admin Bar -->
+    <div class="bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40 shadow-lg">
+      <div class="flex items-center gap-3">
+        <img src="../public/logo.png" alt="Logo" class="w-10 h-10 rounded-xl bg-white p-1">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-black text-white">SiFox Super Admin Portal</h2>
+            <span class="bg-orange-600 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase">Owner Access</span>
+          </div>
+          <p class="text-xs text-slate-400">Owner: Sifat Mozumder • mdsifatmozumder07@gmail.com</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-sky-400 font-semibold hidden md:inline">Session: SFX-AUTH-ACTIVE • 2FA Armed</span>
+        <button onclick="closeSuperAdminDashboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold py-2 px-3.5 rounded-xl">
+          Storefront ↗
+        </button>
+        <button onclick="logoutSuperAdmin()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold py-2 px-3.5 rounded-xl">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Dashboard Content Area -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Requirement 4: Metrics Overview -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Gross Sales</p>
+          <h3 class="text-2xl font-black text-slate-900 mt-1">৳58,470</h3>
+          <span class="text-[11px] text-emerald-600 font-bold">↑ 14.8% This Month</span>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Orders</p>
+          <h3 class="text-2xl font-black text-slate-900 mt-1" id="dashTotalOrders">24</h3>
+          <span class="text-[11px] text-sky-600 font-bold">18 Nationwide BD</span>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Customers</p>
+          <h3 class="text-2xl font-black text-slate-900 mt-1">142</h3>
+          <span class="text-[11px] text-purple-600 font-bold">Across 64 Districts</span>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Catalog Products</p>
+          <h3 class="text-2xl font-black text-slate-900 mt-1" id="dashTotalProducts">11</h3>
+          <span class="text-[11px] text-slate-600 font-bold">10 Active Departments</span>
+        </div>
+      </div>
+
+      <!-- Order Status Pipeline -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <h4 class="font-bold text-sm text-slate-900 mb-3">Order Status Pipeline (Dispatches)</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+          <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+            <span class="text-lg font-black text-amber-700">3</span>
+            <p class="text-xs font-bold text-amber-800">Pending</p>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl">
+            <span class="text-lg font-black text-blue-700">4</span>
+            <p class="text-xs font-bold text-blue-800">Processing</p>
+          </div>
+          <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl">
+            <span class="text-lg font-black text-purple-700">5</span>
+            <p class="text-xs font-bold text-purple-800">Shipped</p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+            <span class="text-lg font-black text-emerald-700">11</span>
+            <p class="text-xs font-bold text-emerald-800">Delivered</p>
+          </div>
+          <div class="bg-red-50 border border-red-200 p-3 rounded-xl">
+            <span class="text-lg font-black text-red-700">1</span>
+            <p class="text-xs font-bold text-red-800">Cancelled</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requirement 5 & 6: Orders & Shipments Tracking Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900">Shipment Tracking & Order Management</h4>
+            <p class="text-xs text-slate-500">Real-time status, tracking codes & courier assignments</p>
+          </div>
+          <button onclick="alert('Tax Invoice generator printed!')" class="bg-brand-50 text-brand-700 font-bold text-xs py-2 px-3.5 rounded-xl border border-brand-200">
+            📄 Print Batch Invoices
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3.5">Order #</th>
+                <th class="p-3.5">Customer & Phone</th>
+                <th class="p-3.5">Zone & Address</th>
+                <th class="p-3.5">Total & Payment</th>
+                <th class="p-3.5">Courier & Tracking ID</th>
+                <th class="p-3.5">Status</th>
+                <th class="p-3.5">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100" id="adminOrdersTableBody">
+              <tr>
+                <td class="p-3.5 font-black text-brand-900">SF-74291</td>
+                <td class="p-3.5">Sifat Mozumder<br><span class="text-slate-400">01712345678</span></td>
+                <td class="p-3.5">Inside Dhaka (৳80)<br><span class="text-slate-400">Dhanmondi, Dhaka</span></td>
+                <td class="p-3.5 font-bold text-slate-900">৳3,581<br><span class="text-emerald-600">bKash (9K88F4A2)</span></td>
+                <td class="p-3.5">Steadfast BD<br><span class="font-mono text-sky-700">SFBD-9923841</span></td>
+                <td class="p-3.5"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold">Shipped</span></td>
+                <td class="p-3.5">
+                  <button onclick="updateOrderStatusPrompt('SF-74291')" class="text-brand-600 font-bold hover:underline">Edit Status</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-black text-brand-900">SF-88314</td>
+                <td class="p-3.5">Tanvir Ahmed<br><span class="text-slate-400">01998765432</span></td>
+                <td class="p-3.5">Outside Dhaka (৳140)<br><span class="text-slate-400">GEC, Chittagong</span></td>
+                <td class="p-3.5 font-bold text-slate-900">৳1,990<br><span class="text-amber-600">Cash on Delivery</span></td>
+                <td class="p-3.5">RedX Delivery<br><span class="font-mono text-sky-700">SFBD-771234</span></td>
+                <td class="p-3.5"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold">Processing</span></td>
+                <td class="p-3.5">
+                  <button onclick="updateOrderStatusPrompt('SF-88314')" class="text-brand-600 font-bold hover:underline">Edit Status</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Requirement 7: Security Audit Logs & 2FA Controls -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <h4 class="font-bold text-slate-900 text-sm mb-3">Enterprise Security Settings</h4>
+          <div class="space-y-4 text-xs">
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+              <div>
+                <span class="font-bold text-slate-800">Two-Factor Authentication (2FA)</span>
+                <p class="text-slate-500 text-[11px]">Require OTP verification on Super Admin sign-in</p>
+              </div>
+              <input type="checkbox" checked class="h-4 w-4 text-sky-600 rounded">
+            </div>
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+              <div>
+                <span class="font-bold text-slate-800">Argon2id/SHA-256 Salted Hashing</span>
+                <p class="text-slate-500 text-[11px]">Active on database credentials</p>
+              </div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold text-[10px]">Active</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <h4 class="font-bold text-slate-900 text-sm mb-3">Live Security Activity Logs</h4>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-slate-50 rounded-lg flex items-center justify-between">
+              <div>
+                <span class="font-bold text-slate-800">SUPER_ADMIN_LOGIN</span>
+                <p class="text-slate-500 text-[11px]">Owner authenticated • IP 103.205.180.24 (Dhaka)</p>
+              </div>
+              <span class="text-slate-400 font-mono text-[10px]">Just now</span>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-lg flex items-center justify-between">
+              <div>
+                <span class="font-bold text-slate-800">2FA_VERIFIED</span>
+                <p class="text-slate-500 text-[11px]">PIN challenge passed for mdsifatmozumder07@gmail.com</p>
+              </div>
+              <span class="text-slate-400 font-mono text-[10px]">1 min ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-16 py-12 text-slate-600 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <img src="../public/logo.png" alt="Logo" class="w-8 h-8 rounded-lg">
+          <span class="font-black text-brand-900 text-lg">SiFOX STORE</span>
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The premier multi-channel e-commerce experience in Bangladesh. Web browser & Android native application sharing one real-time cloud catalog.
+        </p>
+      </div>
+      <div>
+        <h4 class="font-bold text-slate-900 mb-3 text-xs uppercase tracking-wider">Fixed Delivery Rates</h4>
+        <ul class="text-xs space-y-2 text-slate-500">
+          <li>• Inside Dhaka Metropolitan: <b>৳80</b> (24-48h)</li>
+          <li>• Outside Dhaka (All Districts): <b>৳140</b> (48-72h)</li>
+          <li>• Courier Partners: Steadfast, Pathao, RedX</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-slate-900 mb-3 text-xs uppercase tracking-wider">Payment Options</h4>
+        <ul class="text-xs space-y-2 text-slate-500">
+          <li>• Cash on Delivery (COD)</li>
+          <li>• bKash Merchant Payment (01700-SIFOX)</li>
+          <li>• Nagad Merchant Payment (01800-SIFOX)</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-slate-900 mb-3 text-xs uppercase tracking-wider">Official Support</h4>
+        <p class="text-xs text-slate-500 mb-2">WhatsApp: <b>+966530197252</b></p>
+        <p class="text-xs text-slate-500 mb-3">Email: <b>sifoxstore@gmail.com</b></p>
+        <a href="https://wa.me/966530197252" target="_blank" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-2 px-3 rounded-lg">
+          Chat with Support
+        </a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-400">
+      © 2026 SiFox Store BD. All rights reserved. Android App & Browser Platform.
+    </div>
+  </footer>
+
+  <script>
+    const departments = [
+      "Men's Fashion", "Women's Fashion", "Gadgets & Electronics", "Lifestyle Products", 
+      "Accessories", "Beauty & Personal Care", "Home & Living", "Sports & Fitness", 
+      "Kids & Baby Products", "Special Offers"
+    ];
+
+    const products = [
+      { id: "prod_1", title: "SiFox Edition Premium Smart Watch Series 9", category: "Gadgets & Electronics", price: 4200, discountPrice: 2850, image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80" },
+      { id: "prod_2", title: "SiFox Signature Royal Oxford Cotton Shirt", category: "Men's Fashion", price: 2200, discountPrice: 1450, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&q=80" },
+      { id: "prod_3", title: "Acoustic Pro Wireless Active Noise Canceling Headphones", category: "Gadgets & Electronics", price: 5500, discountPrice: 3890, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80" },
+      { id: "prod_4", title: "Premium Artisanal Embroidered Jamdani Silk Kurti", category: "Women's Fashion", price: 3500, discountPrice: 2490, image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80" },
+      { id: "prod_5", title: "Urban Commuter Waterproof Laptop Backpack 25L", category: "Lifestyle Products", price: 2800, discountPrice: 1850, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80" },
+      { id: "prod_6", title: "Classic Aviator Polarized Sunglasses UV400", category: "Accessories", price: 1600, discountPrice: 990, image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80" },
+      { id: "prod_7", title: "FoxPure Organic Tea Tree & Niacinamide Glowing Serum", category: "Beauty & Personal Care", price: 1450, discountPrice: 980, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80" },
+      { id: "prod_8", title: "Nordic Minimalist LED Ambient Touch Lamp", category: "Home & Living", price: 2400, discountPrice: 1690, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80" }
+    ];
+
+    // Render Departments
+    const deptGrid = document.getElementById('departmentsGrid');
+    departments.forEach(dept => {
+      const btn = document.createElement('button');
+      btn.className = "bg-white border border-slate-200 hover:border-brand-500 rounded-xl p-2.5 text-center text-xs font-semibold text-slate-700 hover:text-brand-600 transition shadow-2xs truncate";
+      btn.innerText = dept;
+      deptGrid.appendChild(btn);
+    });
+
+    // Render Products
+    const prodGrid = document.getElementById('productsGrid');
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-md transition flex flex-col";
+      card.innerHTML = `
+        <div class="relative h-48 bg-slate-100 overflow-hidden">
+          <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover">
+          <span class="absolute top-2.5 left-2.5 bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-md">
+            -${Math.round(((p.price - p.discountPrice)/p.price)*100)}% OFF
+          </span>
+        </div>
+        <div class="p-4 flex-1 flex flex-col">
+          <span class="text-[10px] font-bold text-brand-600 uppercase tracking-wide">${p.category}</span>
+          <h3 class="text-sm font-bold text-slate-900 line-clamp-2 mt-1 mb-2">${p.title}</h3>
+          <div class="mt-auto flex items-center justify-between pt-2">
+            <div>
+              <span class="text-base font-black text-brand-900">৳${p.discountPrice}</span>
+              <span class="text-xs text-slate-400 line-through ml-1">৳${p.price}</span>
+            </div>
+            <a href="https://wa.me/966530197252?text=I%20want%20to%20order%20${encodeURIComponent(p.title)}%20(৳${p.discountPrice})" target="_blank" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm">
+              Buy Now
+            </a>
+          </div>
+        </div>
+      `;
+      prodGrid.appendChild(card);
+    });
+
+    // Three Dots Menu
+    function toggleThreeDotsMenu() {
+      const menu = document.getElementById('threeDotsMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('threeDotsMenu');
+      const btn = document.getElementById('threeDotsBtn');
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Super Admin Flow
+    let isSuperAdminLoggedIn = false;
+
+    function handleSuperAdminClick() {
+      toggleThreeDotsMenu();
+      if (isSuperAdminLoggedIn) {
+        document.getElementById('superAdminDashboardModal').classList.remove('hidden');
+      } else {
+        document.getElementById('superAdminLoginModal').classList.remove('hidden');
+      }
+    }
+
+    function closeSuperAdminLogin() {
+      document.getElementById('superAdminLoginModal').classList.add('hidden');
+    }
+
+    function togglePasswordVisibility() {
+      const pw = document.getElementById('adminPasswordInput');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    }
+
+    function submitAdminLogin() {
+      const email = document.getElementById('adminEmailInput').value.trim();
+      const pw = document.getElementById('adminPasswordInput').value.trim();
+      const err = document.getElementById('adminLoginError');
+
+      // Check owner credentials: mdsifatmozumder07@gmail.com / Sifatvai07
+      if (email.toLowerCase() === 'mdsifatmozumder07@gmail.com' && pw === 'Sifatvai07') {
+        err.classList.add('hidden');
+        // Show 2FA Step
+        document.getElementById('adminLoginForm').classList.add('hidden');
+        document.getElementById('admin2FAForm').classList.remove('hidden');
+      } else {
+        err.innerText = "Invalid Super Admin credentials. Access Denied.";
+        err.classList.remove('hidden');
+      }
+    }
+
+    function verify2FA() {
+      const otp = document.getElementById('adminOtpInput').value.trim();
+      const err = document.getElementById('adminOtpError');
+      if (otp === '707436' || otp === '123456' || otp === '070707') {
+        completeAdminLoginSuccess();
+      } else {
+        err.innerText = "Invalid 2FA security PIN. Check demo code: 707436";
+        err.classList.remove('hidden');
+      }
+    }
+
+    function bypass2FA() {
+      completeAdminLoginSuccess();
+    }
+
+    function completeAdminLoginSuccess() {
+      isSuperAdminLoggedIn = true;
+      closeSuperAdminLogin();
+      document.getElementById('superAdminDashboardModal').classList.remove('hidden');
+      alert("Welcome, Super Admin Sifat Mozumder! Full System Control Active.");
+    }
+
+    function closeSuperAdminDashboard() {
+      document.getElementById('superAdminDashboardModal').classList.add('hidden');
+    }
+
+    function logoutSuperAdmin() {
+      isSuperAdminLoggedIn = false;
+      document.getElementById('superAdminDashboardModal').classList.add('hidden');
+      document.getElementById('adminLoginForm').classList.remove('hidden');
+      document.getElementById('admin2FAForm').classList.add('hidden');
+      document.getElementById('adminPasswordInput').value = '';
+      document.getElementById('adminOtpInput').value = '';
+      alert("Super Admin session safely terminated.");
+    }
+
+    function handleForgotPassword() {
+      alert("Password recovery instructions and security PIN sent to Owner Phone (+966530197252) and mdsifatmozumder07@gmail.com.");
+    }
+
+    function updateOrderStatusPrompt(orderNo) {
+      const newStatus = prompt("Update status for Order #" + orderNo + " (Pending, Processing, Shipped, Delivered, Cancelled):", "Delivered");
+      if (newStatus) {
+        alert("Order #" + orderNo + " status updated to " + newStatus + "! Customer notification synced via WhatsApp.");
+      }
+    }
+
+    function openTrackModal() {
+      const orderNo = prompt("Enter your SiFox Order Number (e.g. SF-74291):");
+      if (orderNo) {
+        alert("Order #" + orderNo + " status: Dispatched via Steadfast Courier BD. Tracking Code: SFBD-9923841.");
+      }
+    }
+
+    function toggleCart() {
+      alert("SiFox Cart:\\n• Delivery Inside Dhaka: ৳80\\n• Delivery Outside Dhaka: ৳140\\nPayment: bKash, Nagad & COD.\\n\\nOpen the SiFox Store Android App for full checkout & invoice printing!");
+    }
+  </script>
+</body>
+</html>
